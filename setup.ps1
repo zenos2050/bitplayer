@@ -97,6 +97,15 @@ if (Test-Path $main) {
     Set-Content $main $c -NoNewline
 }
 
+# Visual Studio 2026 (MSVC 14.5x) rejects the deprecated <experimental/coroutine>
+# header used by the permission_handler_windows plugin; silence that check.
+$cm = 'windows\CMakeLists.txt'
+if ((Test-Path $cm) -and -not (Select-String -Path $cm -Pattern '_SILENCE_EXPERIMENTAL_COROUTINE' -Quiet)) {
+    $c = Get-Content $cm -Raw
+    $c = $c -replace '(project\([^)]*\))', "`$1`r`nadd_compile_definitions(_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS)"
+    Set-Content $cm $c -NoNewline
+}
+
 flutter pub get
 if ($LASTEXITCODE -ne 0) { throw "flutter pub get failed" }
 

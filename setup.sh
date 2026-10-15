@@ -18,6 +18,13 @@ if [ -f windows/runner/main.cpp ]; then
   rm -f windows/runner/main.cpp.bak
 fi
 
+# Visual Studio 2026 rejects <experimental/coroutine> used by permission_handler_windows.
+if [ -f windows/CMakeLists.txt ] && ! grep -q _SILENCE_EXPERIMENTAL_COROUTINE windows/CMakeLists.txt; then
+  sed -i.bak '/^project(/a\
+add_compile_definitions(_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS)' windows/CMakeLists.txt
+  rm -f windows/CMakeLists.txt.bak
+fi
+
 PB=/usr/libexec/PlistBuddy
 if [ -x "$PB" ]; then
   # iOS: background audio + expose the Documents folder in the Files app
