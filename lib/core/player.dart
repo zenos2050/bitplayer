@@ -12,7 +12,7 @@ import 'settings.dart';
 /// queue, shuffle / repeat and play counts.
 class PlayerController extends ChangeNotifier {
   PlayerController(this.settings, this.library) {
-    player = Player(configuration: PlayerConfiguration(title: 'RetroTunes'));
+    player = Player(configuration: PlayerConfiguration(title: 'BitPlayer'));
     _subs.addAll([
       player.stream.playing.listen((_) => notifyListeners()),
       player.stream.completed.listen((done) {

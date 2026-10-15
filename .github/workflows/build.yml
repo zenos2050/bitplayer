@@ -1,4 +1,4 @@
-name: Build RetroTunes
+name: Build BitPlayer
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
         run: flutter build apk --release
       - uses: actions/upload-artifact@v4
         with:
-          name: RetroTunes-android
+          name: BitPlayer-android
           path: build/app/outputs/flutter-apk/app-release.apk
 
   windows:
@@ -40,7 +40,7 @@ jobs:
       - run: flutter build windows --release
       - uses: actions/upload-artifact@v4
         with:
-          name: RetroTunes-windows
+          name: BitPlayer-windows
           path: build/windows/x64/runner/Release/
 
   apple:
@@ -56,18 +56,18 @@ jobs:
         run: |
           flutter build macos --release
           cd build/macos/Build/Products/Release
-          ditto -c -k --sequesterRsrc --keepParent RetroTunes.app RetroTunes-macos.zip || \
-            ditto -c -k --sequesterRsrc --keepParent retrotunes.app RetroTunes-macos.zip
+          ditto -c -k --sequesterRsrc --keepParent BitPlayer.app BitPlayer-macos.zip || \
+            ditto -c -k --sequesterRsrc --keepParent bitplayer.app BitPlayer-macos.zip
       - name: Build iOS app (unsigned)
         run: |
           flutter build ios --release --no-codesign
           mkdir -p Payload && cp -R build/ios/iphoneos/Runner.app Payload/
-          zip -qr RetroTunes-unsigned.ipa Payload
+          zip -qr BitPlayer-unsigned.ipa Payload
       - uses: actions/upload-artifact@v4
         with:
-          name: RetroTunes-macos
-          path: build/macos/Build/Products/Release/RetroTunes-macos.zip
+          name: BitPlayer-macos
+          path: build/macos/Build/Products/Release/BitPlayer-macos.zip
       - uses: actions/upload-artifact@v4
         with:
-          name: RetroTunes-ios-unsigned
-          path: RetroTunes-unsigned.ipa
+          name: BitPlayer-ios-unsigned
+          path: BitPlayer-unsigned.ipa

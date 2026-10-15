@@ -198,7 +198,7 @@ class _StatusLcdState extends State<StatusLcd> {
           children: [
             Icon(Icons.album, size: 22, color: RetroColors.lcdDim),
             SizedBox(width: 8),
-            Text('RetroTunes',
+            Text('BitPlayer',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.5)),
           ],
         ),

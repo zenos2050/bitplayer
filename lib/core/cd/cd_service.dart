@@ -258,7 +258,7 @@ class CdService extends ChangeNotifier {
     final format = settings.ripFormat;
     final ffmpeg = await Ffmpeg.locate(settings);
     if (ffmpeg == null && format != RipFormat.wav) {
-      return 'ffmpeg was not found. RetroTunes uses ffmpeg to encode '
+      return 'ffmpeg was not found. BitPlayer uses ffmpeg to encode '
           '${format.label.replaceAll(' Encoder', '')} files.\n\n'
           '${Plat.isWindows ? 'Open Preferences → Importing and click “Install ffmpeg”, '
               'or run: winget install Gyan.FFmpeg' : 'Install it with Homebrew: brew install ffmpeg'}';

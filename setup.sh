@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# RetroTunes - macOS / Linux setup (also used by CI).
-# Generates platform folders, applies RetroTunes' tweaks, fetches packages.
+# BitPlayer - macOS / Linux setup (also used by CI).
+# Generates platform folders, applies BitPlayer's tweaks, fetches packages.
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -10,11 +10,11 @@ if ! command -v flutter >/dev/null; then
   exit 1
 fi
 
-flutter create --org com.solus --project-name retrotunes --platforms=windows,android,macos,ios .
+flutter create --org com.solus --project-name bitplayer --platforms=windows,android,macos,ios .
 
 # Windows window title / size
 if [ -f windows/runner/main.cpp ]; then
-  sed -i.bak 's/L"retrotunes"/L"RetroTunes"/; s/Win32Window::Size size(1280, 720)/Win32Window::Size size(1280, 800)/' windows/runner/main.cpp
+  sed -i.bak 's/L"bitplayer"/L"BitPlayer"/; s/Win32Window::Size size(1280, 720)/Win32Window::Size size(1280, 800)/' windows/runner/main.cpp
   rm -f windows/runner/main.cpp.bak
 fi
 
@@ -29,7 +29,7 @@ if [ -x "$PB" ]; then
   $PB -c "Add :UIFileSharingEnabled bool true" "$IOS_PLIST"
   $PB -c "Delete :LSSupportsOpeningDocumentsInPlace" "$IOS_PLIST" 2>/dev/null || true
   $PB -c "Add :LSSupportsOpeningDocumentsInPlace bool true" "$IOS_PLIST"
-  $PB -c "Set :CFBundleDisplayName RetroTunes" "$IOS_PLIST" 2>/dev/null || true
+  $PB -c "Set :CFBundleDisplayName BitPlayer" "$IOS_PLIST" 2>/dev/null || true
 
   # macOS: no sandbox (the app reads CDs in /Volumes, runs ffmpeg, uses any
   # music folder) + network for MusicBrainz.
@@ -39,8 +39,8 @@ if [ -x "$PB" ]; then
     $PB -c "Delete :com.apple.security.network.client" "$ENT" 2>/dev/null || true
     $PB -c "Add :com.apple.security.network.client bool true" "$ENT"
   done
-  $PB -c "Set :CFBundleName RetroTunes" macos/Runner/Info.plist 2>/dev/null || true
-  sed -i.bak 's/^PRODUCT_NAME = retrotunes$/PRODUCT_NAME = RetroTunes/' macos/Runner/Configs/AppInfo.xcconfig 2>/dev/null || true
+  $PB -c "Set :CFBundleName BitPlayer" macos/Runner/Info.plist 2>/dev/null || true
+  sed -i.bak 's/^PRODUCT_NAME = bitplayer$/PRODUCT_NAME = BitPlayer/' macos/Runner/Configs/AppInfo.xcconfig 2>/dev/null || true
   rm -f macos/Runner/Configs/AppInfo.xcconfig.bak
 fi
 

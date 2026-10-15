@@ -133,7 +133,7 @@ class _PrefsDialogState extends State<_PrefsDialog> {
         const SizedBox(height: 6),
         const Text(
           'The music folder is the library. You can add, rename, move or retag '
-          'files with any other program — RetroTunes notices the changes. '
+          'files with any other program — BitPlayer notices the changes. '
           'Playlists are stored as .m3u8 files in the “Playlists” subfolder, so '
           'copying the whole folder to your phone brings them along.',
           style: TextStyle(fontSize: 11, color: Color(0xFF555555)),
@@ -272,7 +272,7 @@ class _PrefsDialogState extends State<_PrefsDialog> {
       if (_ffmpegFound == null) {
         showMessage(context, 'Install ffmpeg',
             'winget finished with code ${r.exitCode}.\n\n${r.stdout}\n${r.stderr}\n\n'
-            'If ffmpeg was installed, restart RetroTunes or click Detect.');
+            'If ffmpeg was installed, restart BitPlayer or click Detect.');
       }
     } catch (e) {
       if (mounted) {

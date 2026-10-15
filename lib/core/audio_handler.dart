@@ -31,8 +31,8 @@ class RetroAudioHandler extends BaseAudioHandler with SeekHandler {
     final handler = await AudioService.init(
       builder: () => RetroAudioHandler(c, art),
       config: const AudioServiceConfig(
-        androidNotificationChannelId: 'com.solus.retrotunes.playback',
-        androidNotificationChannelName: 'RetroTunes playback',
+        androidNotificationChannelId: 'com.solus.bitplayer.playback',
+        androidNotificationChannelName: 'BitPlayer playback',
         androidNotificationOngoing: true,
         androidStopForegroundOnPause: true,
       ),

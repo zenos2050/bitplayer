@@ -11,16 +11,16 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
   await AppServices.init();
-  runApp(const RetroTunesApp());
+  runApp(const BitPlayerApp());
 }
 
-class RetroTunesApp extends StatelessWidget {
-  const RetroTunesApp({super.key});
+class BitPlayerApp extends StatelessWidget {
+  const BitPlayerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'RetroTunes',
+      title: 'BitPlayer',
       debugShowCheckedModeBanner: false,
       theme: Plat.isDesktop ? RetroTheme.desktop() : RetroTheme.mobile(),
       home: Plat.isDesktop ? const DesktopShell() : const MobileShell(),

@@ -1,5 +1,5 @@
-name: retrotunes
-description: "RetroTunes - a classic, iTunes-style standalone music player for Windows, macOS, Android and iOS."
+name: bitplayer
+description: "BitPlayer - a classic, iTunes-style standalone music player for Windows, macOS, Android and iOS."
 publish_to: 'none'
 version: 1.0.0+1
 

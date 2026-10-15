@@ -123,6 +123,6 @@ class Settings extends ChangeNotifier {
     final home = Platform.environment['USERPROFILE'] ??
         Platform.environment['HOME'] ??
         (await getApplicationDocumentsDirectory()).path;
-    return p.join(home, 'Music', 'RetroTunes');
+    return p.join(home, 'Music', 'BitPlayer');
   }
 }

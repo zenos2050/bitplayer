@@ -1,8 +1,8 @@
 <#
-  RetroTunes - Windows setup
+  BitPlayer - Windows setup
   ---------------------------
   Generates the platform folders (windows / android / macos / ios), applies
-  RetroTunes' tweaks and fetches packages.
+  BitPlayer's tweaks and fetches packages.
 
     .\setup.ps1                # check tools, generate, pub get
     .\setup.ps1 -InstallTools  # also install missing tools with winget
@@ -24,7 +24,7 @@ function Winget-Install($id, $extra = @()) {
     winget install --id $id -e --accept-source-agreements --accept-package-agreements @extra
 }
 
-Write-Host "== RetroTunes setup ==" -ForegroundColor Green
+Write-Host "== BitPlayer setup ==" -ForegroundColor Green
 
 # --- Git --------------------------------------------------------------------
 if (-not (Have git)) {
@@ -85,14 +85,14 @@ if (-not (Have ffmpeg) -and -not (Test-Path "$env:LOCALAPPDATA\Microsoft\WinGet\
 # --- Generate platform folders ----------------------------------------------
 Write-Host "`nGenerating platform projects..." -ForegroundColor Green
 flutter config --enable-windows-desktop | Out-Null
-flutter create --org com.solus --project-name retrotunes --platforms=windows,android,macos,ios .
+flutter create --org com.solus --project-name bitplayer --platforms=windows,android,macos,ios .
 if ($LASTEXITCODE -ne 0) { throw "flutter create failed" }
 
 # Window title + size
 $main = 'windows\runner\main.cpp'
 if (Test-Path $main) {
     $c = Get-Content $main -Raw
-    $c = $c -replace 'L"retrotunes"', 'L"RetroTunes"'
+    $c = $c -replace 'L"bitplayer"', 'L"BitPlayer"'
     $c = $c -replace 'Win32Window::Size size\(1280, 720\)', 'Win32Window::Size size(1280, 800)'
     Set-Content $main $c -NoNewline
 }
@@ -106,7 +106,7 @@ Write-Host @"
 
 Done. Next steps:
   flutter run -d windows                 # run the desktop app (debug)
-  flutter build windows --release        # -> build\windows\x64\runner\Release\retrotunes.exe
+  flutter build windows --release        # -> build\windows\x64\runner\Release\bitplayer.exe
   flutter build apk --release            # -> build\app\outputs\flutter-apk\app-release.apk
   adb install build\app\outputs\flutter-apk\app-release.apk
 "@ -ForegroundColor Green

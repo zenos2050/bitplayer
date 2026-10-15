@@ -9,7 +9,7 @@ import 'dart:typed_data';
 import 'cd_models.dart';
 
 class MusicBrainz {
-  static const _ua = 'RetroTunes/1.0 ( personal music player; https://musicbrainz.org )';
+  static const _ua = 'BitPlayer/1.0 ( personal music player; https://musicbrainz.org )';
   static DateTime _last = DateTime.fromMillisecondsSinceEpoch(0);
 
   /// MusicBrainz allows ~1 request/second.

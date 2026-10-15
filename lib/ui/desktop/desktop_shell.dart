@@ -387,10 +387,10 @@ class _DesktopShellState extends State<DesktopShell> {
                 ),
                 SubmenuButton(
                   menuChildren: [
-                    item('About RetroTunes', () {
+                    item('About BitPlayer', () {
                       showAboutDialog(
                         context: context,
-                        applicationName: 'RetroTunes',
+                        applicationName: 'BitPlayer',
                         applicationVersion: '1.0.0',
                         applicationIcon: const Icon(Icons.album, size: 40),
                         children: const [

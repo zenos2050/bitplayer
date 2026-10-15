@@ -491,7 +491,7 @@ void _writeFlac(String path, TagData t, PictureEdit? picture) {
   }
 
   // Vorbis comment block.
-  var vendor = 'RetroTunes';
+  var vendor = 'BitPlayer';
   final keep = <String>[];
   final vcIndex = blocks.indexWhere((b) => b.type == 4);
   if (vcIndex >= 0) {

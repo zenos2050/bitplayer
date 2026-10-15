@@ -1,4 +1,4 @@
-# RetroTunes
+# BitPlayer
 
 A classic, iTunes-style (v4–7 era) standalone music player.
 
@@ -22,7 +22,7 @@ tag reader/writer and playlist code are shared.
 - **Playback:** `media_kit` (libmpv) — plays essentially every audio format on every platform.
 - **Tags:** pure-Dart reader/writer (`lib/core/tags`) — ID3v1/v2.2–2.4, FLAC, Ogg/Opus, MP4, WAV, AIFF.
 - **Windows CDs:** direct `DeviceIoControl` calls via `dart:ffi` (raw CD-DA reads, TOC, eject). Playback streams each track through a loopback HTTP server so seeking works.
-- **macOS CDs:** macOS mounts audio CDs as `.aiff` files; RetroTunes plays/rips those and reads the real TOC from `.TOC.plist`.
+- **macOS CDs:** macOS mounts audio CDs as `.aiff` files; BitPlayer plays/rips those and reads the real TOC from `.TOC.plist`.
 - **Encoding:** ffmpeg (MP3 via LAME at 320 kbps by default; AAC, ALAC, FLAC, Ogg, WAV selectable).
 - **Track names:** MusicBrainz disc-ID lookup + Cover Art Archive (free successors to Gracenote/CDDB).
 
@@ -56,12 +56,12 @@ iPhone still requires signing (Xcode, AltStore/Sideloadly, or a developer accoun
 
 ## Your library
 
-Default music folder: `%USERPROFILE%\Music\RetroTunes` (Windows),
-`~/Music/RetroTunes` (macOS), `/storage/emulated/0/Music` (Android),
+Default music folder: `%USERPROFILE%\Music\BitPlayer` (Windows),
+`~/Music/BitPlayer` (macOS), `/storage/emulated/0/Music` (Android),
 the app's Documents/Music folder (iOS, visible in the Files app).
 
 ```
-RetroTunes/
+BitPlayer/
   Pink Floyd/
     Wish You Were Here/
       01 Shine On You Crazy Diamond (Parts I-V).mp3

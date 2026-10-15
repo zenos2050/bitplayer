@@ -77,7 +77,7 @@ class _MobileShellState extends State<MobileShell> with WidgetsBindingObserver {
     if (await Permission.audio.isGranted) return true;
     if (await Permission.storage.isGranted) return true;
     if (!request) return false;
-    // "All files access" lets RetroTunes edit tags & playlists in place.
+    // "All files access" lets BitPlayer edit tags & playlists in place.
     final m = await Permission.manageExternalStorage.request();
     if (m.isGranted) return true;
     final a = await Permission.audio.request();
@@ -169,7 +169,7 @@ class _MobileShellState extends State<MobileShell> with WidgetsBindingObserver {
 
   Widget _welcome() {
     return Scaffold(
-      appBar: const RetroNavBar(title: 'RetroTunes', showNowPlaying: false),
+      appBar: const RetroNavBar(title: 'BitPlayer', showNowPlaying: false),
       body: Padding(
         padding: const EdgeInsets.all(28),
         child: Column(
@@ -177,11 +177,11 @@ class _MobileShellState extends State<MobileShell> with WidgetsBindingObserver {
           children: [
             const Icon(Icons.album, size: 96, color: RetroColors.navBottom),
             const SizedBox(height: 16),
-            const Text('Welcome to RetroTunes',
+            const Text('Welcome to BitPlayer',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
             const SizedBox(height: 12),
             Text(
-              'RetroTunes plays the music in your\n${s.library.root}\nfolder.\n\n'
+              'BitPlayer plays the music in your\n${s.library.root}\nfolder.\n\n'
               'Allow “All files access” so it can also edit song info and '
               'save playlists next to your music.',
               textAlign: TextAlign.center,
@@ -201,8 +201,8 @@ class _MobileShellState extends State<MobileShell> with WidgetsBindingObserver {
   Future<void> _changeFolder() async {
     if (Plat.isIOS) {
       showMessage(context, 'Music Folder',
-          'On iPhone, RetroTunes uses its own folder. Open the Files app → '
-          'On My iPhone → RetroTunes → Music and copy your music there.');
+          'On iPhone, BitPlayer uses its own folder. Open the Files app → '
+          'On My iPhone → BitPlayer → Music and copy your music there.');
       return;
     }
     final dir = await FilePicker.platform.getDirectoryPath(dialogTitle: 'Music Folder');
@@ -256,7 +256,7 @@ class _MoreTab extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.all(14),
           child: Text(
-            'RetroTunes 1.0\n\n'
+            'BitPlayer 1.0\n\n'
             'Your music folder uses the same Artist / Album layout as the desktop app, '
             'with playlists as .m3u8 files in the Playlists folder. Copy or sync the '
             'whole folder (USB, Syncthing, etc.) to keep phone and computer in step.',

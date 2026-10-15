@@ -1,4 +1,4 @@
-package com.solus.retrotunes
+package com.solus.bitplayer
 
 import com.ryanheise.audioservice.AudioServiceActivity
 
