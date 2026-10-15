@@ -79,11 +79,11 @@ class TopBar extends StatelessWidget {
           ),
           const Icon(Icons.volume_up, size: 14, color: Color(0xFF404040)),
           const SizedBox(width: 16),
-          const Expanded(
+          Expanded(
             child: Center(
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 480, minWidth: 260),
-                child: StatusLcd(),
+                constraints: const BoxConstraints(maxWidth: 480, minWidth: 260),
+                child: const StatusLcd(),
               ),
             ),
           ),

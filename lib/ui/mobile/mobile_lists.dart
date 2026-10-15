@@ -91,7 +91,7 @@ class _SongListState extends State<SongList> {
           title: t.title.isEmpty ? 'Untitled' : t.title,
           subtitle: widget.numbered ? t.displayArtist : '${t.displayArtist} — ${t.displayAlbum}',
           leading: widget.showArt
-              ? Thumb(t, size: 50)
+              ? ArtThumb(t, size: 50)
               : (widget.numbered
                   ? SizedBox(
                       width: 36,
@@ -315,7 +315,7 @@ class AlbumsTab extends StatelessWidget {
               title: a.title,
               subtitle: a.artist,
               height: 60,
-              leading: Thumb(a.tracks.first, size: 59),
+              leading: ArtThumb(a.tracks.first, size: 59),
               chevron: true,
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (_) => AlbumPage(title: a.title, tracks: a.tracks))),
@@ -485,7 +485,7 @@ class ArtistPage extends StatelessWidget {
             title: a.title,
             subtitle: a.year > 0 ? '${a.year}' : null,
             height: 60,
-            leading: Thumb(a.tracks.first, size: 59),
+            leading: ArtThumb(a.tracks.first, size: 59),
             chevron: true,
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (_) => AlbumPage(title: a.title, tracks: a.tracks))),
@@ -524,7 +524,7 @@ class AlbumPage extends StatelessWidget {
                     ),
                   ),
                   child: Row(children: [
-                    Thumb(first, size: 100),
+                    ArtThumb(first, size: 100),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(
@@ -593,7 +593,7 @@ class QueuePage extends StatelessWidget {
                 title: t.title,
                 subtitle: t.displayArtist,
                 highlight: cur,
-                leading: Thumb(t, size: 50),
+                leading: ArtThumb(t, size: 50),
                 onTap: () => p.jumpTo(i),
               );
             },

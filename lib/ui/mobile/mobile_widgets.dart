@@ -292,8 +292,8 @@ class SectionHeader extends StatelessWidget {
 }
 
 /// Square thumbnail for list rows.
-class Thumb extends StatelessWidget {
-  const Thumb(this.track, {super.key, this.size = 50});
+class ArtThumb extends StatelessWidget {
+  const ArtThumb(this.track, {super.key, this.size = 50});
   final Track track;
   final double size;
   @override

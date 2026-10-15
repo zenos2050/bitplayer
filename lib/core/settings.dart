@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'platform.dart';
 
-enum RepeatMode { off, all, one }
+enum LoopMode { off, all, one }
 
 enum RipFormat { mp3, aac, alac, flac, ogg, wav }
 
@@ -47,7 +47,7 @@ class Settings extends ChangeNotifier {
   bool playWhileImporting = false;
   double volume = 80;
   bool shuffle = false;
-  RepeatMode repeat = RepeatMode.off;
+  LoopMode repeat = LoopMode.off;
   bool showBrowser = false;
   bool showArtwork = true;
   String viewMode = 'list'; // list | albums
@@ -72,8 +72,8 @@ class Settings extends ChangeNotifier {
         playWhileImporting = (j['playWhileImporting'] ?? false) as bool;
         volume = ((j['volume'] ?? 80) as num).toDouble();
         shuffle = (j['shuffle'] ?? false) as bool;
-        repeat = RepeatMode.values.firstWhere((r) => r.name == j['repeat'],
-            orElse: () => RepeatMode.off);
+        repeat = LoopMode.values.firstWhere((r) => r.name == j['repeat'],
+            orElse: () => LoopMode.off);
         showBrowser = (j['showBrowser'] ?? false) as bool;
         showArtwork = (j['showArtwork'] ?? true) as bool;
         viewMode = (j['viewMode'] ?? 'list') as String;

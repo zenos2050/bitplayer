@@ -181,9 +181,9 @@ class _DesktopShellState extends State<DesktopShell> {
                   onTap: s.player.toggleShuffle),
               const SizedBox(width: 2),
               MetalButton(
-                  icon: repeat == RepeatMode.one ? Icons.repeat_one : Icons.repeat,
+                  icon: repeat == LoopMode.one ? Icons.repeat_one : Icons.repeat,
                   tooltip: 'Repeat: ${repeat.name}',
-                  active: repeat != RepeatMode.off,
+                  active: repeat != LoopMode.off,
                   onTap: s.player.cycleRepeat),
               const SizedBox(width: 2),
               MetalButton(

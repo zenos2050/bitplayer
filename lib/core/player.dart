@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
-import 'package:media_kit/media_kit.dart';
+import 'package:media_kit/media_kit.dart' hide Track;
 
 import 'library.dart';
 import 'models.dart';
@@ -57,13 +57,13 @@ class PlayerController extends ChangeNotifier {
   Track? get current =>
       (_pos >= 0 && _pos < _order.length) ? _queue[_order[_pos]] : null;
   bool get playing => player.state.playing;
-  bool get hasNext => _pos + 1 < _order.length || settings.repeat == RepeatMode.all;
+  bool get hasNext => _pos + 1 < _order.length || settings.repeat == LoopMode.all;
   Duration get position => player.state.position;
   Duration get duration => player.state.duration;
   Stream<Duration> get positionStream => player.stream.position;
 
   bool get shuffle => settings.shuffle;
-  RepeatMode get repeat => settings.repeat;
+  LoopMode get repeat => settings.repeat;
   double get volume => settings.volume;
 
   /// Plays [tracks] starting at [index] (the visible list becomes the queue).
@@ -124,7 +124,7 @@ class PlayerController extends ChangeNotifier {
     if (!auto) _maybeCountSkip();
     if (_pos + 1 < _order.length) {
       _pos++;
-    } else if (settings.repeat == RepeatMode.all) {
+    } else if (settings.repeat == LoopMode.all) {
       if (settings.shuffle) _order.shuffle(_rng);
       _pos = 0;
     } else {
@@ -182,7 +182,7 @@ class PlayerController extends ChangeNotifier {
 
   void cycleRepeat() {
     settings.update((s) => s.repeat =
-        RepeatMode.values[(s.repeat.index + 1) % RepeatMode.values.length]);
+        LoopMode.values[(s.repeat.index + 1) % LoopMode.values.length]);
     notifyListeners();
   }
 
@@ -192,7 +192,7 @@ class PlayerController extends ChangeNotifier {
       _countedCurrent = true;
       if (!t.isCd) library.markPlayed(t);
     }
-    if (settings.repeat == RepeatMode.one) {
+    if (settings.repeat == LoopMode.one) {
       player.seek(Duration.zero).then((_) => player.play());
       _countedCurrent = false;
       return;

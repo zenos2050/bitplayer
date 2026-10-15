@@ -97,8 +97,8 @@ class NowPlayingScreen extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
       child: Row(children: [
         IconButton(
-          icon: Icon(s.repeat == RepeatMode.one ? Icons.repeat_one : Icons.repeat,
-              color: s.repeat == RepeatMode.off ? Colors.white54 : const Color(0xFF5AA0FF)),
+          icon: Icon(s.repeat == LoopMode.one ? Icons.repeat_one : Icons.repeat,
+              color: s.repeat == LoopMode.off ? Colors.white54 : const Color(0xFF5AA0FF)),
           onPressed: p.cycleRepeat,
         ),
         Expanded(
