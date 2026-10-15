@@ -22,3 +22,4 @@ ios/Flutter/Generated.xcconfig
 macos/Flutter/ephemeral/
 windows/flutter/ephemeral/
 **/GeneratedPluginRegistrant.*
+ci-logs/

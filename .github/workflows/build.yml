@@ -2,14 +2,21 @@ name: Build BitPlayer
 
 on:
   push:
+    branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: write   # lets each job publish its build log to a ci-logs/* branch
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   analyze-and-android:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
@@ -17,57 +24,107 @@ jobs:
         with:
           channel: stable
           cache: true
-      - run: bash setup.sh
+      - name: Setup
+        shell: bash
+        run: |
+          mkdir -p ci-logs
+          set -o pipefail
+          bash setup.sh 2>&1 | tee ci-logs/1-setup.txt
       - name: Analyze
-        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+        shell: bash
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          flutter analyze --no-fatal-infos --no-fatal-warnings 2>&1 | tee ci-logs/2-analyze.txt
       - name: Build APK
-        run: flutter build apk --release
+        shell: bash
+        run: |
+          set -o pipefail
+          flutter build apk --release 2>&1 | tee ci-logs/3-build.txt
       - uses: actions/upload-artifact@v4
         with:
           name: BitPlayer-android
           path: build/app/outputs/flutter-apk/app-release.apk
+      - name: Publish log
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: bash .github/publish-log.sh android
 
   windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
-      - run: .\setup.ps1 -SkipDoctor
+      - name: Setup
         shell: pwsh
-      - run: flutter build windows --release
+        run: |
+          New-Item -ItemType Directory -Force ci-logs | Out-Null
+          .\setup.ps1 -SkipDoctor *>&1 | Tee-Object ci-logs/1-setup.txt
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - name: Build Windows app
+        shell: bash
+        run: |
+          set -o pipefail
+          flutter build windows --release 2>&1 | tee ci-logs/3-build.txt
       - uses: actions/upload-artifact@v4
         with:
           name: BitPlayer-windows
           path: build/windows/x64/runner/Release/
+      - name: Publish log
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: bash .github/publish-log.sh windows
 
   apple:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
-      - run: bash setup.sh
+      - name: Setup
+        shell: bash
+        run: |
+          mkdir -p ci-logs
+          set -o pipefail
+          bash setup.sh 2>&1 | tee ci-logs/1-setup.txt
       - name: Build macOS app
+        shell: bash
         run: |
-          flutter build macos --release
+          set -o pipefail
+          flutter build macos --release 2>&1 | tee ci-logs/3-build-macos.txt
           cd build/macos/Build/Products/Release
-          ditto -c -k --sequesterRsrc --keepParent BitPlayer.app BitPlayer-macos.zip || \
-            ditto -c -k --sequesterRsrc --keepParent bitplayer.app BitPlayer-macos.zip
+          APP=$(ls -d *.app | head -1)
+          ditto -c -k --sequesterRsrc --keepParent "$APP" BitPlayer-macos.zip
       - name: Build iOS app (unsigned)
+        if: always()
+        shell: bash
         run: |
-          flutter build ios --release --no-codesign
+          set -o pipefail
+          flutter build ios --release --no-codesign 2>&1 | tee ci-logs/4-build-ios.txt
           mkdir -p Payload && cp -R build/ios/iphoneos/Runner.app Payload/
           zip -qr BitPlayer-unsigned.ipa Payload
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: BitPlayer-macos
           path: build/macos/Build/Products/Release/BitPlayer-macos.zip
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: BitPlayer-ios-unsigned
           path: BitPlayer-unsigned.ipa
+      - name: Publish log
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: bash .github/publish-log.sh apple
