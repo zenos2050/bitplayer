@@ -1,0 +1,34 @@
+name: retrotunes
+description: "RetroTunes - a classic, iTunes-style standalone music player for Windows, macOS, Android and iOS."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+  flutter: ">=3.24.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Playback: libmpv via media_kit plays MP3, AAC/M4A, ALAC, FLAC, OGG Vorbis,
+  # Opus, WAV, AIFF, WMA, APE, WavPack, etc. on every platform.
+  media_kit: ^1.1.11
+  media_kit_libs_audio: ^1.0.5
+
+  # Lock screen / notification controls and background playback on mobile.
+  audio_service: ^0.18.15
+  audio_session: ^0.1.21
+
+  path: ^1.9.0
+  path_provider: ^2.1.4
+  file_picker: ">=8.0.0 <11.0.0"
+  permission_handler: ">=11.3.0 <13.0.0"
+  crypto: ^3.0.3
+  ffi: ^2.1.0
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

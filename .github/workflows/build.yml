@@ -1,0 +1,73 @@
+name: Build RetroTunes
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  analyze-and-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: bash setup.sh
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+      - name: Build APK
+        run: flutter build apk --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RetroTunes-android
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: .\setup.ps1 -SkipDoctor
+        shell: pwsh
+      - run: flutter build windows --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RetroTunes-windows
+          path: build/windows/x64/runner/Release/
+
+  apple:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: bash setup.sh
+      - name: Build macOS app
+        run: |
+          flutter build macos --release
+          cd build/macos/Build/Products/Release
+          ditto -c -k --sequesterRsrc --keepParent RetroTunes.app RetroTunes-macos.zip || \
+            ditto -c -k --sequesterRsrc --keepParent retrotunes.app RetroTunes-macos.zip
+      - name: Build iOS app (unsigned)
+        run: |
+          flutter build ios --release --no-codesign
+          mkdir -p Payload && cp -R build/ios/iphoneos/Runner.app Payload/
+          zip -qr RetroTunes-unsigned.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RetroTunes-macos
+          path: build/macos/Build/Products/Release/RetroTunes-macos.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RetroTunes-ios-unsigned
+          path: RetroTunes-unsigned.ipa

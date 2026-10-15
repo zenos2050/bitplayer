@@ -1,0 +1,24 @@
+# Flutter / Dart
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+pubspec.lock
+*.iml
+.idea/
+.vscode/
+# Platform build output
+android/.gradle/
+android/local.properties
+android/app/debug
+android/app/profile
+android/app/release
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Generated.xcconfig
+macos/Flutter/ephemeral/
+windows/flutter/ephemeral/
+**/GeneratedPluginRegistrant.*
