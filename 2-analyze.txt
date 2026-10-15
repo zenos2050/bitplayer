@@ -1,0 +1,5 @@
+Analyzing bitplayer...                                          
+
+warning • A value of type 'bool' can't be returned by the 'onError' handler because it must be assignable to 'FutureOr<Null>', as required by 'Future.then' • lib/core/cd/cd_server.dart:103:48 • invalid_return_type_for_then
+
+1 issue found. (ran in 9.9s)
